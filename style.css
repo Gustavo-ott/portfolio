@@ -1,0 +1,214 @@
+/* Configuração Geral */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 1. Animação do Divider (Gradiente Fluido) */
+/* Cria um background grande e move ele horizontalmente */
+.animate-gradient-bar {
+    background: linear-gradient(90deg, #4F39F6, #F54900, #4F39F6);
+    background-size: 200% 100%;
+    animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+/* 2. Gradiente nos Ícones do Phosphor */
+/* Aplica o gradiente no 'texto' do ícone */
+.gradient-icon {
+    background: linear-gradient(to right, #4F39F6, #F54900);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block; /* Necessário para o transform funcionar bem */
+}
+
+/* 3. Utilitário de Fade In para o Menu */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+    animation: fadeIn 0.2s ease-out forwards;
+}
+
+/* 4. Animação de entrada dos elementos (Hero) */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+    opacity: 0; /* Começa invisível */
+}
+.delay-100 { animation-delay: 0.2s; }
+
+
+/* --- 1. MagicUI: Dot Pattern (Fundo Pontilhado) --- */
+.bg-dot-pattern {
+    /* Cria os pontos cinzas */
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px; /* Distância entre os pontos */
+    /* Cria um fade out suave nas bordas */
+    -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+}
+
+/* --- 2. MagicUI: Shine Border (Borda Brilhante nos Cards) --- */
+/* Esta animação gira um gradiente atrás do card */
+@keyframes border-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.magic-card-wrapper {
+    position: relative;
+    border-radius: 0.75rem; /* rounded-xl */
+    overflow: hidden;
+    padding: 1px; /* Espessura da borda */
+    isolation: isolate;
+}
+
+/* O brilho que gira (invisível por padrão) */
+.magic-card-wrapper::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, transparent, #7C3AED, #F54900, transparent, transparent);
+    animation: border-spin 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+}
+
+/* Mostra o brilho no hover */
+.magic-card-wrapper:hover::before {
+    opacity: 1;
+}
+
+/* --- 3. MagicUI: Animated Text Gradient (Texto Animado) --- */
+.animate-text-flow {
+    background-size: 200% auto;
+    animation: textFlow 3s linear infinite;
+}
+
+@keyframes textFlow {
+    to { background-position: 200% center; }
+}
+
+
+
+/* --- Animações de Entrada (Page Load) --- */
+
+/* Define a animação de subir e aparecer */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Começa 30px para baixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Termina na posição original */
+    }
+}
+
+/* Classe para aplicar a animação */
+.animate-slide-up {
+    opacity: 0; /* Começa invisível para não piscar */
+    animation: slideUpFade 0.8s ease-out forwards; /* Dura 0.8s */
+}
+
+/* Classes de atraso (para os elementos não aparecerem todos juntos) */
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+/* Estado Inicial: Invisível e um pouco para baixo */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+    will-change: opacity, transform;
+}
+
+/* Estado Final: Visível e na posição original */
+.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delays para elementos em sequência (ex: cards) */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+
+
+/* --- Estilo para o Carrossel e Cards --- */
+/* Garante que os itens do grid mantenham altura consistente */
+.grid-item-h-full {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Garante que o conteúdo dentro do card empurre o footer para baixo */
+.grid-item-h-full .flex-1 {
+    flex-grow: 1;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem; /* Espaçamento das laterais */
+    z-index: 20; /* Garante que as setas estejam acima dos cards */
+    pointer-events: none; /* Permite clicar nos cards mesmo com as setas no hover */
+}
+
+.carousel-controls button {
+    pointer-events: auto; /* Reabilita o clique nos botões */
+    opacity: 0.7; /* Seta um pouco transparente */
+    transition: opacity 0.3s, transform 0.3s;
+}
+.carousel-controls button:hover {
+    opacity: 1;
+    transform: scale(1.1); /* Um leve zoom ao passar o mouse */
+}
+
+/* --- Animação de Transição do Carrossel --- */
+@keyframes carouselFade {
+    from {
+        opacity: 0;
+        transform: translateX(20px); /* Começa levemente deslocado */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-carousel-fade {
+    animation: carouselFade 0.5s ease-out forwards;
+}
